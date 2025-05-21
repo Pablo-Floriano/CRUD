@@ -1,12 +1,16 @@
 import express from 'express'
 import { PrismaClient } from '@prisma/client'
+import cors from 'cors'
 
 const prisma = new PrismaClient()
 const app = express()
 
-app.listen(3000)
-app.use(express.json())
+app.listen(3000, () => {
+  console.log('🚀 Servidor rodando em http://localhost:3000');
+});
 
+app.use(express.json())
+app.use(cors())
 
 
 // criar um usuario
@@ -19,8 +23,7 @@ app.post('/usuarios', async (req, res) =>{
             age: req.body.age,
             email: req.body.email
         }
-    })
-        
+    }) 
     res.status(201).json(users)
 })
 
@@ -28,9 +31,7 @@ app.post('/usuarios', async (req, res) =>{
 
 app.get('/usuarios', async (req, res) =>{
 
-    const allUser = await prisma.user.findMany({
-
-    })
+    const allUser = await prisma.user.findMany();
 
     res.status(200).json(allUser)
 })
@@ -40,9 +41,7 @@ app.get('/usuarios', async (req, res) =>{
 app.put('/usuarios/:id', async (req, res) =>{
 
     const editUser = await prisma.user.update({
-        where: {
-            id: req.params.id
-        },
+        where: {id: req.params.id},
         data:{
             name: req.body.name,
             age: req.body.age,
@@ -71,7 +70,9 @@ app.delete('/usuarios/:id', async (req, res) => {
         
     }),
     
-    res.status(200).json({ message: `Usuário deletado com sucesso!`,
-        User
-     })
+    res.status(200).json({ message: `Usuário deletado com sucesso!`,User})
 })
+/*
+    npx prisma db push -> iniciar banco de dados
+    npx prisma studio -> visualizar banco de dados
+*/
