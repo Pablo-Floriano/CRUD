@@ -45,7 +45,6 @@ app.put('/usuarios/:id', async (req, res) =>{
         data:{
             name: req.body.name,
             age: req.body.age,
-            email: req.body.email
         }
     })
 
@@ -72,6 +71,7 @@ app.delete('/usuarios/:id', async (req, res) => {
     
     res.status(200).json({ message: `Usuário deletado com sucesso!`,User})
 })
+
 /*
     npx prisma db push -> iniciar banco de dados
     npx prisma studio -> visualizar banco de dados
